@@ -41,6 +41,20 @@ Modelagem conceitual e lógica de um sistema de vendas online, evoluída a parti
 * **Múltiplas Formas de Pagamento (`Forma de Pagamento`):** Permite que um cliente cadastre diversos meios de pagamento (`ENUM`: Cartão de Crédito, Débito, PIX, Boleto) e os reutilize em diferentes pedidos (`1:N`), omitindo o CVV em conformidade com boas práticas de segurança.
 * **Desacoplamento Logístico (`Entrega`):** Separa o fluxo de entrega (`Status entrega` via `ENUM` e `Codigo de Rastreio`) da aprovação comercial do `Pedido` (`1:1`), eliminando redundâncias e preservando o histórico logístico mesmo em cenários de cancelamento.
 * **Cadeia de Suprimentos e Marketplace (`N:M`):** Integra `Produto` com `Fornecedor`, `Estoque` e `Terceiro - Vendedor` por meio de tabelas associativas para controle de disponibilidade e inventário.
+---
+
+## 4. Sistema de Gestão de Oficina Mecânica (Ordem de Serviço)
+
+Modelagem conceitual e lógica desenvolvida do zero para controle de atendimentos, equipes de mecânicos, catálogo de serviços e peças de uma oficina mecânica.
+
+![Diagrama Oficina Mecânica](OficinaMecanica.png)
+
+### Regras de Negócio e Arquitetura:
+* **Clientes e Veículos (`1:N`):** Permite o cadastro de clientes (PF/PJ) associados a múltiplos veículos (`Veiculo`), mantendo o histórico individualizado de cada automóvel pela placa e modelo.
+* **Equipes e Mecânicos (`1:N`):** Organiza os profissionais (`Mecanico`, com código, endereço e especialidade) em equipes responsáveis tanto pela avaliação técnica quanto pela execução dos reparos.
+* **Ordem de Serviço e Autorização (`Ordem de Servico`):** Centraliza número da OS, datas de emissão e conclusão, valor total, flag de autorização do cliente (`Autorizacao Cliente`) e status operacional controlado via `ENUM`.
+* **Composição de Serviços e Peças (`N:M`):** Utiliza tabelas associativas (`Ordem de Servico_has_Servico` e `Ordem de Servico_has_Peça`) para registrar quantidades, valores unitários e subtotais calculados a partir das tabelas de referência de mão de obra e estoque de peças.
+* **Controle Financeiro (`Forma de pagamento`):** Vincula o método de pagamento (`ENUM`: PIX, Cartão, Dinheiro, Boleto) e o status de quitação diretamente à Ordem de Serviço.
 
 ---
 
