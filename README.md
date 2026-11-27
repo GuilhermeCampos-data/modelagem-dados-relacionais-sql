@@ -30,6 +30,21 @@ Modelagem de alta complexidade relacional contemplando herança/especialização
 
 ---
 
+## 3. Plataforma de E-commerce (Refinamento de Modelo Conceitual)
+
+Modelagem conceitual e lógica de um sistema de vendas online, evoluída a partir de um esquema base para atender a regras de negócio de varejo digital, meios de pagamento e logística.
+
+![Diagrama E-commerce](EcommerceRefinado.png)
+
+### Regras de Negócio e Arquitetura:
+* **Especialização de Clientes (`Cliente` → `Cliente(PF)` / `Cliente(PJ)`):** Separa cadastros de Pessoa Física (`CPF`) e Pessoa Jurídica (`CNPJ`, `Razao Social`, `Nome Fantasia`) em relacionamentos `1:1` exclusivos, evitando campos nulos e garantindo unicidade fiscal.
+* **Múltiplas Formas de Pagamento (`Forma de Pagamento`):** Permite que um cliente cadastre diversos meios de pagamento (`ENUM`: Cartão de Crédito, Débito, PIX, Boleto) e os reutilize em diferentes pedidos (`1:N`), omitindo o CVV em conformidade com boas práticas de segurança.
+* **Desacoplamento Logístico (`Entrega`):** Separa o fluxo de entrega (`Status entrega` via `ENUM` e `Codigo de Rastreio`) da aprovação comercial do `Pedido` (`1:1`), eliminando redundâncias e preservando o histórico logístico mesmo em cenários de cancelamento.
+* **Cadeia de Suprimentos e Marketplace (`N:M`):** Integra `Produto` com `Fornecedor`, `Estoque` e `Terceiro - Vendedor` por meio de tabelas associativas para controle de disponibilidade e inventário.
+
+---
+
 ## Tecnologias e Conceitos Aplicados
+
 * **Ferramentas:** MySQL Workbench, SQL (DDL / DML)
 * **Conceitos:** Modelagem Conceitual e Lógica (DER/EER), Normalização (1FN, 2FN, 3FN), Integridade Referencial e Cardinalidade.
